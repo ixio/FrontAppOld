@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-
-const fetched_annotation_campaigns = [
-  { id: 1, name: 'SPM whale annotation', annotation_set: 1, datasets_count: 2, start: '2010-08-19', end: '2010-11-02', annotation_link: '#' },
-]
+import request from 'superagent';
 
 class AnnotationCampaigns extends Component {
   constructor(props) {
@@ -13,9 +10,11 @@ class AnnotationCampaigns extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      annotation_campaigns: fetched_annotation_campaigns
-    });
+    request.get(process.env.REACT_APP_API_URL + '/front_manager/annotation_campaigns').then(req => {
+      this.setState({
+        annotation_campaigns: req.body
+      });
+    })
   }
 
   render() {
