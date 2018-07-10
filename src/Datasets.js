@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-
-const fetched_datasets = [
-  { name: 'SPMAuralA2010', type: 'PAM', files_type: '.wav', files_count: 1807, start_date: '2010-08-19', end_date: '2010-11-02' },
-  { name: 'SPMAuralB2010', type: 'PAM', files_type: '.wav', files_count: 1807, start_date: '2010-08-19', end_date: '2010-11-02' },
-  { name: 'SPM-ECMWF', type: 'Meteo', files_type: '.nc', files_count: 1, start_date: '2010-08-01', end_date: '2010-09-01' },
-]
+import request from 'superagent';
 
 class Datasets extends Component {
   constructor(props) {
@@ -15,21 +10,23 @@ class Datasets extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      datasets: fetched_datasets
-    });
+    request.get(process.env.REACT_APP_API_URL + '/front_manager/datasets').then(req => {
+      this.setState({
+        datasets: req.body
+      });
+    })
   }
 
   render() {
     const datasets = this.state.datasets.map(dataset => {
       return (
-        <tr>
+        <tr key={dataset.id}>
           <td>{dataset.name}</td>
           <td>{dataset.type}</td>
           <td>{dataset.files_type}</td>
           <td>{dataset.files_count}</td>
-          <td>{dataset.start_date}</td>
-          <td>{dataset.end_date}</td></tr>
+          <td>{new Date(dataset.start_date).toDateString()}</td>
+          <td>{new Date(dataset.end_date).toDateString()}</td></tr>
       );
     });
 
