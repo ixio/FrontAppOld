@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Datasets from './Datasets'
+import AnnotationCampaigns from './AnnotationCampaigns'
 
 import './css/bootstrap-4.1.1.min.css';
 import './css/app.css';
@@ -28,7 +29,7 @@ class App extends Component {
         </div>
         <div className="row text-center h-100 main">
           <Navbar/>
-          <Datasets/>
+          <AnnotationCampaigns/>
         </div>
       </div>
     );
