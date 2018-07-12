@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Datasets from './Datasets'
 import AnnotationCampaigns from './AnnotationCampaigns'
+import CreateAnnotationCampaign from './CreateAnnotationCampaign'
 
 import {
   Switch,
@@ -39,6 +40,7 @@ class App extends Component {
             <Route exact path='/' component={Datasets}/>
             <Route path='/datasets' component={Datasets}/>
             <Route path='/annotation_campaigns' component={AnnotationCampaigns}/>
+            <Route path='/create_annotation_campaign' component={CreateAnnotationCampaign}/>
           </Switch>
         </div>
       </div>

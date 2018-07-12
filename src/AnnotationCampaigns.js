@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import request from 'superagent';
+
 
 class AnnotationCampaigns extends Component {
   constructor(props) {
@@ -41,7 +43,7 @@ class AnnotationCampaigns extends Component {
           {annotation_campaigns}
           </tbody>
         </table>
-        <p><button className="btn btn-primary">New annotation campaign</button></p>
+        <p><Link to="/create_annotation_campaign" className="btn btn-primary">New annotation campaign</Link></p>
       </div>
     )
   }
