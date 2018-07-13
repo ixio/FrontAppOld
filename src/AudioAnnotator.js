@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-//import './css/audio-annotator/font-awesome-4.5.0.min.css';
+import './css/font-awesome-4.7.0.min.css';
 import './css/audio-annotator/materialize.min.css';
 import './css/audio-annotator/audio-annotator.css';
 
