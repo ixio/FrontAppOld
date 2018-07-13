@@ -4,6 +4,7 @@ import Datasets from './Datasets'
 import AnnotationCampaigns from './AnnotationCampaigns'
 import CreateAnnotationCampaign from './CreateAnnotationCampaign'
 import AnnotationTasks from './AnnotationTasks'
+import AudioAnnotator from './AudioAnnotator'
 
 import { Switch, Route, Link } from 'react-router-dom';
 
@@ -40,6 +41,7 @@ const OdeApp = () => (
 const App = () => (
     <Switch>
       <Route path='/annotation_tasks/:annotation_campaign_id' component={AnnotationTasks} />
+      <Route path='/audio-annotator/:annotation_campaign_id/:file_id' component={AudioAnnotator} />
       <Route component={OdeApp} />
     </Switch>
 );
