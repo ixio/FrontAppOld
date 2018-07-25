@@ -6,7 +6,7 @@ import CreateAnnotationCampaign from './CreateAnnotationCampaign'
 import AnnotationTasks from './AnnotationTasks'
 import AudioAnnotator from './AudioAnnotator'
 
-import { Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import './css/bootstrap-4.1.1.min.css';
 import './css/app.css';
@@ -39,11 +39,13 @@ const OdeApp = () => (
 );
 
 const App = () => (
+  <Router>
     <Switch>
       <Route path='/annotation_tasks/:annotation_campaign_id' component={AnnotationTasks} />
       <Route path='/audio-annotator/:annotation_campaign_id/:file_id' component={AudioAnnotator} />
       <Route component={OdeApp} />
     </Switch>
+  </Router>
 );
 
 export default App;
