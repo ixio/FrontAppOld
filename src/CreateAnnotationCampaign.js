@@ -74,10 +74,9 @@ class ShowAnnotationSet extends Component<ShowAnnotationSetProps> {
       selected: 'placeholder',
       tags: 'Tags'
     }
-    this.handleOnChange = this.handleOnChange.bind(this);
   }
 
-  handleOnChange(event) {
+  handleOnChange = (event) => {
     let id = event.target.value;
     this.setState({
       selected: id,
@@ -128,25 +127,17 @@ class CreateAnnotationCampaign extends Component<Props> {
       dataset_choices: [],
       annotation_set_choices: []
     }
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleDescChange = this.handleDescChange.bind(this);
-    this.handleAddDataset = this.handleAddDataset.bind(this);
-    this.handleRemoveDataset = this.handleRemoveDataset.bind(this);
-    this.handleStartChange = this.handleStartChange.bind(this);
-    this.handleEndChange = this.handleEndChange.bind(this);
-    this.handleAnnotationSetChange = this.handleAnnotationSetChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleNameChange(event) {
+  handleNameChange = (event) => {
     this.setState({new_ac_name: event.target.value});
   }
 
-  handleDescChange(event) {
+  handleDescChange = (event) => {
     this.setState({new_ac_desc: event.target.value});
   }
 
-  handleAddDataset(event) {
+  handleAddDataset = (event) => {
     let dataset_id = parseInt(event.target.value, 10);
     let dataset_choices = Object.assign({}, this.state.dataset_choices);
     let new_ac_datasets = Object.assign({}, this.state.new_ac_datasets);
@@ -158,7 +149,7 @@ class CreateAnnotationCampaign extends Component<Props> {
     });
   }
 
-  handleRemoveDataset(id) {
+  handleRemoveDataset = (id) => {
     let dataset_id = parseInt(id, 10);
     let dataset_choices = Object.assign({}, this.state.dataset_choices);
     let new_ac_datasets = Object.assign({}, this.state.new_ac_datasets);
@@ -170,19 +161,19 @@ class CreateAnnotationCampaign extends Component<Props> {
     });
   }
 
-  handleStartChange(event) {
+  handleStartChange = (event) => {
     this.setState({new_ac_start: event.target.value});
   }
 
-  handleEndChange(event) {
+  handleEndChange = (event) => {
     this.setState({new_ac_end: event.target.value});
   }
 
-  handleAnnotationSetChange(event){
+  handleAnnotationSetChange = (event) => {
     this.setState({new_ac_annotation_set: parseInt(event.target.value, 10)});
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     let res = {
       name: this.state.new_ac_name,
       desc: this.state.new_ac_desc,
