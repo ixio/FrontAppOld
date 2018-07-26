@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import request from 'superagent';
 
@@ -11,7 +13,18 @@ type Props = {
   }
 };
 
-class AnnotationTasks extends Component<Props> {
+type task_type = {
+  id: number,
+  filename: string,
+  link: string,
+  status: number
+};
+
+type State = {
+  tasks: Array<task_type>
+};
+
+class AnnotationTasks extends Component<Props, State> {
   state = {
     tasks: []
   }

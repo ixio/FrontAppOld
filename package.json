@@ -12,7 +12,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "mocha --require ./test/utils/load_libs.js",
+    "test": "mocha --require ./test/utils/load_libs.js && echo 'Running flow' && flow check",
     "eject": "react-scripts eject",
     "flow": "flow"
   },

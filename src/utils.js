@@ -6,3 +6,8 @@ export function arrayToObject(array, key) {
      return obj
    }, {})
 }
+
+// Object.values alternative for flow (cf https://github.com/facebook/flow/issues/2221)
+export function objectValues(obj) {
+	return Object.keys(obj).map(key => obj[key]);
+}

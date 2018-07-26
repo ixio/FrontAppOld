@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 
 import './css/font-awesome-4.7.0.min.css';

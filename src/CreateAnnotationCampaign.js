@@ -1,27 +1,35 @@
+// @flow
+
 import React, { Component } from 'react';
 import request from 'superagent';
-import { arrayToObject } from './utils';
+import * as utils from './utils';
+
+type datasets_type = {
+  [?number]: {
+    id: number,
+    name: string
+  }
+};
+
+type annotation_sets_type = {
+  [?number]: {
+    id: number,
+    tags: {
+      annotationTag: Array<string>
+    }
+  }
+};
 
 type AddDatasetsProps = {
-  chosen_datasets: {
-    [number]: {
-      id: number,
-      name: string
-    }
-  },
-  dataset_options: {
-    [number]: {
-      id: number,
-      name: string
-    }
-  },
-  onDelClick: (id: number) => void,
-  onSelectChange: (event: SyntheticEvent<>) => void
+  chosen_datasets: datasets_type,
+  dataset_options: datasets_type,
+  onDelClick: (dataset_id: number) => void,
+  onSelectChange: (event: SyntheticEvent<HTMLInputElement>) => void
 };
 
 class AddDatasets extends Component<AddDatasetsProps> {
   render() {
-    let chosen_datasets = Object.values(this.props.chosen_datasets).map(dataset => {
+    let chosen_datasets = utils.objectValues(this.props.chosen_datasets).map(dataset => {
       return(
         <div className="col-sm-3 border rounded" key={dataset.id}>
           {dataset.name} <button className="btn btn-danger" onClick={() => this.props.onDelClick(dataset.id)}>x</button>
@@ -31,7 +39,7 @@ class AddDatasets extends Component<AddDatasetsProps> {
 
     let select_dataset;
     if (Object.keys(this.props.dataset_options).length > 0) {
-      let dataset_options = Object.values(this.props.dataset_options).map(dataset => {
+      let dataset_options = utils.objectValues(this.props.dataset_options).map(dataset => {
         return (
           <option key={dataset.id} value={dataset.id}>{dataset.name}</option>
         );
@@ -56,36 +64,34 @@ class AddDatasets extends Component<AddDatasetsProps> {
 }
 
 type ShowAnnotationSetProps = {
-  annotation_sets: {
-    [number]: {
-      id: number,
-      tags: {
-        annotationTag: Array<string>
-      }
-    }
-  },
-  onChange: (event: SyntheticEvent<>) => void
+  annotation_sets: annotation_sets_type,
+  onChange: (event: SyntheticEvent<HTMLInputElement>) => void
 };
 
-class ShowAnnotationSet extends Component<ShowAnnotationSetProps> {
+type ShowAnnotationSetState = {
+  selected: number,
+  tags: Array<string>
+};
+
+class ShowAnnotationSet extends Component<ShowAnnotationSetProps, ShowAnnotationSetState> {
   state = {
-    selected: 'placeholder',
+    selected: 0,
     tags: []
   }
 
-  handleOnChange = (event) => {
-    let id = event.target.value;
+  handleOnChange = (event: SyntheticEvent<HTMLInputElement>) => {
+    let id = parseInt(event.currentTarget.value, 10);
     this.setState({
       selected: id,
-      tags: this.props.annotation_sets[id].tags.annotationTag.join(', ')
+      tags: this.props.annotation_sets[id].tags.annotationTag
     });
     this.props.onChange(event);
   }
 
   render() {
-    let options = Object.values(this.props.annotation_sets).map(annotation_set => {
+    let options = Object.keys(this.props.annotation_sets).map(id => {
       return (
-        <option key={annotation_set.id} value={annotation_set.id}>Annotation Set n°{annotation_set.id}</option>
+        <option key={id} value={id}>Annotation Set n°{id}</option>
       );
     });
 
@@ -93,12 +99,12 @@ class ShowAnnotationSet extends Component<ShowAnnotationSetProps> {
       <div className="form-group">
         <div className="col-sm-4 offset-sm-4">
           <select value={this.state.selected} className="form-control" onChange={this.handleOnChange}>
-            <option value='placeholder' disabled>Select an annotation set</option>
+            <option value={0} disabled>Select an annotation set</option>
             {options}
           </select>
         </div>
         <div className="col-sm-12 border rounded">
-          {this.state.tags}
+          {this.state.tags.join(', ')}
         </div>
       </div>
     )
@@ -111,7 +117,18 @@ type Props = {
   }
 };
 
-class CreateAnnotationCampaign extends Component<Props> {
+type State = {
+  new_ac_name: string,
+  new_ac_desc: string,
+  new_ac_datasets: datasets_type,
+  new_ac_start: string,
+  new_ac_end: string,
+  new_ac_annotation_set: number,
+  dataset_choices: datasets_type,
+  annotation_set_choices: annotation_sets_type
+};
+
+class CreateAnnotationCampaign extends Component<Props, State> {
   state = {
     new_ac_name: '',
     new_ac_desc: '',
@@ -123,16 +140,16 @@ class CreateAnnotationCampaign extends Component<Props> {
     annotation_set_choices: {}
   }
 
-  handleNameChange = (event) => {
-    this.setState({new_ac_name: event.target.value});
+  handleNameChange = (event: SyntheticEvent<HTMLInputElement>) => {
+    this.setState({new_ac_name: event.currentTarget.value});
   }
 
-  handleDescChange = (event) => {
-    this.setState({new_ac_desc: event.target.value});
+  handleDescChange = (event: SyntheticEvent<HTMLInputElement>) => {
+    this.setState({new_ac_desc: event.currentTarget.value});
   }
 
-  handleAddDataset = (event) => {
-    let dataset_id = parseInt(event.target.value, 10);
+  handleAddDataset = (event: SyntheticEvent<HTMLInputElement>) => {
+    let dataset_id = parseInt(event.currentTarget.value, 10);
     let dataset_choices = Object.assign({}, this.state.dataset_choices);
     let new_ac_datasets = Object.assign({}, this.state.new_ac_datasets);
     new_ac_datasets[dataset_id] = dataset_choices[dataset_id];
@@ -143,8 +160,7 @@ class CreateAnnotationCampaign extends Component<Props> {
     });
   }
 
-  handleRemoveDataset = (id) => {
-    let dataset_id = parseInt(id, 10);
+  handleRemoveDataset = (dataset_id: number) => {
     let dataset_choices = Object.assign({}, this.state.dataset_choices);
     let new_ac_datasets = Object.assign({}, this.state.new_ac_datasets);
     dataset_choices[dataset_id] = new_ac_datasets[dataset_id];
@@ -155,23 +171,23 @@ class CreateAnnotationCampaign extends Component<Props> {
     });
   }
 
-  handleStartChange = (event) => {
-    this.setState({new_ac_start: event.target.value});
+  handleStartChange = (event: SyntheticEvent<HTMLInputElement>) => {
+    this.setState({new_ac_start: event.currentTarget.value});
   }
 
-  handleEndChange = (event) => {
-    this.setState({new_ac_end: event.target.value});
+  handleEndChange = (event: SyntheticEvent<HTMLInputElement>) => {
+    this.setState({new_ac_end: event.currentTarget.value});
   }
 
-  handleAnnotationSetChange = (event) => {
-    this.setState({new_ac_annotation_set: parseInt(event.target.value, 10)});
+  handleAnnotationSetChange = (event: SyntheticEvent<HTMLInputElement>) => {
+    this.setState({new_ac_annotation_set: parseInt(event.currentTarget.value, 10)});
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = (event: SyntheticEvent<HTMLInputElement>) => {
     let res = {
       name: this.state.new_ac_name,
       desc: this.state.new_ac_desc,
-      datasets: Object.values(this.state.new_ac_datasets).map(v => v.id),
+      datasets: Object.keys(this.state.new_ac_datasets),
       start: this.state.new_ac_start,
       end: this.state.new_ac_end,
       annotation_set: this.state.new_ac_annotation_set,
@@ -189,8 +205,8 @@ class CreateAnnotationCampaign extends Component<Props> {
     if (!process.env.REACT_APP_API_URL) throw new Error('REACT_APP_API_URL missing in env');
     request.get(process.env.REACT_APP_API_URL + '/front_manager/create_annotation_campaign').then(req => {
       this.setState({
-        dataset_choices: arrayToObject(req.body.datasets, 'id'),
-        annotation_set_choices: arrayToObject(req.body.annotation_sets, 'id')
+        dataset_choices: utils.arrayToObject(req.body.datasets, 'id'),
+        annotation_set_choices: utils.arrayToObject(req.body.annotation_sets, 'id')
       });
     })
   }
