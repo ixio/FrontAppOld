@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import request from 'superagent';
 
 class Datasets extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      datasets: []
-    }
+  state = {
+    datasets: []
   }
 
   componentDidMount() {

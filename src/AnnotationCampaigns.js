@@ -4,11 +4,8 @@ import request from 'superagent';
 
 
 class AnnotationCampaigns extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      annotation_campaigns: []
-    }
+  state = {
+    annotation_campaigns: []
   }
 
   componentDidMount() {

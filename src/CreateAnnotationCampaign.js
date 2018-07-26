@@ -68,12 +68,9 @@ type ShowAnnotationSetProps = {
 };
 
 class ShowAnnotationSet extends Component<ShowAnnotationSetProps> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: 'placeholder',
-      tags: 'Tags'
-    }
+  state = {
+    selected: 'placeholder',
+    tags: []
   }
 
   handleOnChange = (event) => {
@@ -115,18 +112,15 @@ type Props = {
 };
 
 class CreateAnnotationCampaign extends Component<Props> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      new_ac_name: '',
-      new_ac_desc: '',
-      new_ac_datasets: {},
-      new_ac_start: '',
-      new_ac_end: '',
-      new_ac_annotation_set: '',
-      dataset_choices: [],
-      annotation_set_choices: []
-    }
+  state = {
+    new_ac_name: '',
+    new_ac_desc: '',
+    new_ac_datasets: {},
+    new_ac_start: '',
+    new_ac_end: '',
+    new_ac_annotation_set: 0,
+    dataset_choices: {},
+    annotation_set_choices: {}
   }
 
   handleNameChange = (event) => {

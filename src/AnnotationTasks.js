@@ -12,11 +12,8 @@ type Props = {
 };
 
 class AnnotationTasks extends Component<Props> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tasks: []
-    }
+  state = {
+    tasks: []
   }
 
   componentDidMount() {
