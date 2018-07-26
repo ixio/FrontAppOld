@@ -13,14 +13,19 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "mocha --require ./test/utils/load_libs.js",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "flow": "flow"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
+    "eslint-plugin-flowtype": "^2.50.0",
     "eslint-plugin-react": "^7.10.0",
+    "flow-bin": "^0.77.0",
     "jsdom": "^11.11.0",
     "mocha": "^5.2.0",
     "mocha-eslint": "^4.1.0"

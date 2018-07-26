@@ -3,7 +3,15 @@ import request from 'superagent';
 
 import { Link } from 'react-router-dom';
 
-class AnnotationTasks extends Component {
+type Props = {
+  match: {
+    params: {
+      annotation_campaign_id: number
+    }
+  }
+};
+
+class AnnotationTasks extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {

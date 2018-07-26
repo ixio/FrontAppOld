@@ -2,7 +2,24 @@ import React, { Component } from 'react';
 import request from 'superagent';
 import { arrayToObject } from './utils';
 
-class AddDatasets extends Component {
+type AddDatasetsProps = {
+  chosen_datasets: {
+    [number]: {
+      id: number,
+      name: string
+    }
+  },
+  dataset_options: {
+    [number]: {
+      id: number,
+      name: string
+    }
+  },
+  onDelClick: (id: number) => void,
+  onSelectChange: (event: SyntheticEvent<>) => void
+};
+
+class AddDatasets extends Component<AddDatasetsProps> {
   render() {
     let chosen_datasets = Object.values(this.props.chosen_datasets).map(dataset => {
       return(
@@ -38,7 +55,19 @@ class AddDatasets extends Component {
   }
 }
 
-class ShowAnnotationSet extends Component {
+type ShowAnnotationSetProps = {
+  annotation_sets: {
+    [number]: {
+      id: number,
+      tags: {
+        annotationTag: Array<string>
+      }
+    }
+  },
+  onChange: (event: SyntheticEvent<>) => void
+};
+
+class ShowAnnotationSet extends Component<ShowAnnotationSetProps> {
   constructor(props) {
     super(props);
     this.state = {
@@ -78,10 +107,15 @@ class ShowAnnotationSet extends Component {
       </div>
     )
   }
-
 }
 
-class CreateAnnotationCampaign extends Component {
+type Props = {
+  history: {
+    push: (url: string) => void
+  }
+};
+
+class CreateAnnotationCampaign extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -159,7 +193,7 @@ class CreateAnnotationCampaign extends Component {
     };
     request.post(process.env.REACT_APP_API_URL + '/front_manager/create_annotation_campaign')
     .send(res)
-    .then(req => {
+    .then(() => {
       this.props.history.push('/annotation_campaigns')
     }).catch(error => { alert(error) });
     event.preventDefault();

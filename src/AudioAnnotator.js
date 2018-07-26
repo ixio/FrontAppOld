@@ -22,7 +22,16 @@ function run_script(script_code) {
   document.body.appendChild(script);
 }
 
-class AudioAnnotator extends Component {
+type Props = {
+  match: {
+    params: {
+      file_id: number,
+      annotation_campaign_id: number
+    }
+  }
+};
+
+class AudioAnnotator extends Component<Props> {
   componentDidMount() {
     let file_id = this.props.match.params.file_id;
     let campaign_id = this.props.match.params.annotation_campaign_id;
