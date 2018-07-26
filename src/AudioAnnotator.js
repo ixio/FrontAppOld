@@ -10,6 +10,7 @@ function load_script(script_url) {
   script.src = script_url;
   script.async = false;
   script.defer = true;
+  if (!document.body) throw new Error("Unexpectedly missing <body>.");
   document.body.appendChild(script);
 }
 
@@ -19,6 +20,7 @@ function run_script(script_code) {
   script.innerHTML = script_code;
   script.async = false;
   script.defer = true;
+  if (!document.body) throw new Error("Unexpectedly missing <body>.");
   document.body.appendChild(script);
 }
 
@@ -48,6 +50,7 @@ class AudioAnnotator extends Component<Props> {
     load_script("/audio-annotator/static/js/src/components.js");
     load_script("/audio-annotator/static/js/src/annotation_stages.js");
     load_script("/audio-annotator/static/js/src/main.js");
+    if (!process.env.REACT_APP_API_URL) throw new Error('REACT_APP_API_URL missing in env');
     let script = `
       var dataUrl = '${process.env.REACT_APP_API_URL}/front_manager/audio_annotator/${campaign_id}/${file_id}';
       var postUrl = '${process.env.REACT_APP_API_URL}/front_manager/audio_annotator/${campaign_id}/${file_id}';

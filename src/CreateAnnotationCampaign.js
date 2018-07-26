@@ -176,6 +176,7 @@ class CreateAnnotationCampaign extends Component<Props> {
       end: this.state.new_ac_end,
       annotation_set: this.state.new_ac_annotation_set,
     };
+    if (!process.env.REACT_APP_API_URL) throw new Error('REACT_APP_API_URL missing in env');
     request.post(process.env.REACT_APP_API_URL + '/front_manager/create_annotation_campaign')
     .send(res)
     .then(() => {
@@ -185,6 +186,7 @@ class CreateAnnotationCampaign extends Component<Props> {
   }
 
   componentDidMount() {
+    if (!process.env.REACT_APP_API_URL) throw new Error('REACT_APP_API_URL missing in env');
     request.get(process.env.REACT_APP_API_URL + '/front_manager/create_annotation_campaign').then(req => {
       this.setState({
         dataset_choices: arrayToObject(req.body.datasets, 'id'),

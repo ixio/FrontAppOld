@@ -18,6 +18,7 @@ class AnnotationTasks extends Component<Props> {
 
   componentDidMount() {
     let annotation_campaign_id = this.props.match.params.annotation_campaign_id;
+    if (!process.env.REACT_APP_API_URL) throw new Error('REACT_APP_API_URL missing in env');
     request.get(process.env.REACT_APP_API_URL + '/front_manager/annotation_tasks/' + annotation_campaign_id).then(req => {
       this.setState({
         tasks: req.body,
