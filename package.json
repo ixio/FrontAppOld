@@ -20,7 +20,9 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
+    "eslint-plugin-react": "^7.10.0",
     "jsdom": "^11.11.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "mocha-eslint": "^4.1.0"
   }
 }
