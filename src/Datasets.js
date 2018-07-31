@@ -8,7 +8,7 @@ class Datasets extends Component {
 
   componentDidMount() {
     if (!process.env.REACT_APP_API_URL) throw new Error('REACT_APP_API_URL missing in env');
-    request.get(process.env.REACT_APP_API_URL + '/front_manager/datasets').then(req => {
+    return request.get(process.env.REACT_APP_API_URL + '/front_manager/datasets').then(req => {
       this.setState({
         datasets: req.body
       });
