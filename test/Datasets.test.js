@@ -1,5 +1,6 @@
 import assert from 'assert';
 import React from 'react';
+import nock from 'nock';
 import { mount, shallow } from 'enzyme';
 
 import Datasets from '../src/Datasets';
@@ -15,6 +16,7 @@ describe('testing Datasets component', function () {
     });
 
     it('shows the correct datasets', () => {
+        nock(process.env.REACT_APP_API_URL).get('/front_manager/datasets').reply(200, datasets);
         let wrapper = shallow(<Datasets />, { disableLifecycleMethods: true });
         return wrapper.instance().componentDidMount().then(() => {
             wrapper.update();

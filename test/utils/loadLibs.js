@@ -35,6 +35,3 @@ copyProps(window, global);
 
 // Let's set the ENV vars
 process.env.REACT_APP_API_URL = 'http://test.ode'; // This should be just a hostname for nock
-
-// Let's load simAPI which will simulate the Feature Service API with nock and fixtures
-require('./simAPI.js');
