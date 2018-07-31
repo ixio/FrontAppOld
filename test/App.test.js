@@ -1,12 +1,14 @@
+import assert from 'assert';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { mount, shallow } from 'enzyme';
+
 import App from '../src/App';
 
 describe('testing App component', function () {
     this.timeout(20000);
-    it('renders without crashing', () => {
-        const div = document.createElement('div');
-        ReactDOM.render(<App />, div);
-        ReactDOM.unmountComponentAtNode(div);
+    it('mounts properly with Navbar', () => {
+        let wrapper = mount(<App />);
+        assert(wrapper.text().includes('Navbar'), 'Navbar not found');
+        wrapper.unmount();
     });
 });

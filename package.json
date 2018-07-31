@@ -12,7 +12,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "mocha --require ./test/utils/load_libs.js && echo 'Running flow' && flow check",
+    "test": "mocha --require ./test/utils/loadLibs.js && echo 'Running flow' && flow check",
     "eject": "react-scripts eject",
     "flow": "flow"
   },
@@ -24,6 +24,8 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint-plugin-flowtype": "^2.50.0",
     "eslint-plugin-react": "^7.10.0",
     "flow-bin": "^0.77.0",

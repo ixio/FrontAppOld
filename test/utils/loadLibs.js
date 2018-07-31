@@ -6,6 +6,9 @@ require('babel-register')();
 // Ignore CSS files import for Mocha
 require.extensions['.css'] = function () {return null};
 
+// Load Enzyme
+require('./loadEnzyme')
+
 // Load JSDom and set it up
 // cf https://airbnb.io/enzyme/docs/guides/jsdom.html
 
