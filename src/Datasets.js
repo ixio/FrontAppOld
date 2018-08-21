@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
 import request from 'superagent';
+import * as utils from './utils';
 
 class Datasets extends Component {
   state = {
     datasets: []
   }
+  testing = 'TEST';
+  secondTest = new Promise(r => { console.log('yup') });
+  getData = utils.makeCancelable(
+    request.get(process.env.REACT_APP_API_URL + '/front_manager/datasets')
+    .then(req => {
+      this.setState({
+        datasets: req.body
+      })
+    })
+  );
 
   componentDidMount() {
     if (!process.env.REACT_APP_API_URL) throw new Error('REACT_APP_API_URL missing in env');
-    return request.get(process.env.REACT_APP_API_URL + '/front_manager/datasets').then(req => {
-      this.setState({
-        datasets: req.body
-      });
-    })
+    console.log('testing='+this.testing);
+    console.log(typeof this.secondTest);
+    console.log(typeof this.getData);
+    return this.getData;
+  }
+
+  componentWillUnmount() {
+    this.getData.cancel();
   }
 
   render() {
