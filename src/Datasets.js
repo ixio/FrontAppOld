@@ -6,8 +6,6 @@ class Datasets extends Component {
   state = {
     datasets: []
   }
-  testing = 'TEST';
-  secondTest = new Promise(r => { console.log('yup') });
   getData = utils.makeCancelable(
     request.get(process.env.REACT_APP_API_URL + '/front_manager/datasets')
     .then(req => {
@@ -19,10 +17,7 @@ class Datasets extends Component {
 
   componentDidMount() {
     if (!process.env.REACT_APP_API_URL) throw new Error('REACT_APP_API_URL missing in env');
-    console.log('testing='+this.testing);
-    console.log(typeof this.secondTest);
-    console.log(typeof this.getData);
-    return this.getData;
+    return this.getData.promise;
   }
 
   componentWillUnmount() {
