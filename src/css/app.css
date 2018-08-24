@@ -2,3 +2,9 @@
   margin-top: 40px;
   min-height: 800px;
 }
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  white-space: pre-line;
+}

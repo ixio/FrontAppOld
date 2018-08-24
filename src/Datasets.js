@@ -12,6 +12,10 @@ class Datasets extends Component {
       this.setState({
         datasets: req.body
       })
+    }).catch(err => {
+      this.setState({
+        error: err
+      })
     })
   );
 
@@ -36,6 +40,15 @@ class Datasets extends Component {
           <td>{new Date(dataset.end_date).toDateString()}</td></tr>
       );
     });
+
+    if(this.state.error) {
+      return (
+        <div className="col-sm-9 border rounded">
+          <h1>Datasets</h1>
+          <p className="error-message">{this.state.error.message}</p>
+        </div>
+      )
+    }
 
     return (
       <div className="col-sm-9 border rounded">
