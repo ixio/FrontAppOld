@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import request from 'superagent';
-import * as utils from './utils';
 
 class Datasets extends Component {
   state = {
     datasets: []
   }
-  getData = utils.makeCancelable(
-    request.get(process.env.REACT_APP_API_URL + '/front_manager/datasets')
-    .then(req => {
+  getData = request.get(process.env.REACT_APP_API_URL + '/front_manager/datasets')
+
+  componentDidMount() {
+    if (!process.env.REACT_APP_API_URL) throw new Error('REACT_APP_API_URL missing in env');
+    return this.getData.then(req => {
       this.setState({
         datasets: req.body
       })
@@ -16,16 +17,11 @@ class Datasets extends Component {
       this.setState({
         error: err
       })
-    })
-  );
-
-  componentDidMount() {
-    if (!process.env.REACT_APP_API_URL) throw new Error('REACT_APP_API_URL missing in env');
-    return this.getData.promise;
+    });
   }
 
   componentWillUnmount() {
-    this.getData.cancel();
+    this.getData.abort();
   }
 
   render() {
